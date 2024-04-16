@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cloudwebrtc/go-protoo/logger"
-	"github.com/cloudwebrtc/go-protoo/peer"
-	"github.com/cloudwebrtc/go-protoo/room"
-	"github.com/cloudwebrtc/go-protoo/server"
-	"github.com/cloudwebrtc/go-protoo/transport"
+	"github.com/craterone/go-protoo/logger"
+	"github.com/craterone/go-protoo/peer"
+	"github.com/craterone/go-protoo/room"
+	"github.com/craterone/go-protoo/server"
+	"github.com/craterone/go-protoo/transport"
 )
 
 var testRoom *room.Room

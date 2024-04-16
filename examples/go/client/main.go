@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/cloudwebrtc/go-protoo/client"
-	"github.com/cloudwebrtc/go-protoo/logger"
-	"github.com/cloudwebrtc/go-protoo/peer"
-	"github.com/cloudwebrtc/go-protoo/transport"
+	"github.com/craterone/go-protoo/client"
+	"github.com/craterone/go-protoo/logger"
+	"github.com/craterone/go-protoo/peer"
+	"github.com/craterone/go-protoo/transport"
 )
 
 var peerId = "go-client-id-xxxx"
@@ -82,7 +82,7 @@ func handleWebSocketOpen(con *transport.WebSocketTransport) {
 }
 
 func main() {
-	client.NewClient("ws://127.0.0.1:9090/ws?peer="+peerId, handleWebSocketOpen)
+	client.NewClient("ws://127.0.0.1:8000/signal-server?peer="+peerId, handleWebSocketOpen)
 	for {
 	}
 }

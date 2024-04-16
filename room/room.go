@@ -3,9 +3,9 @@ package room
 import (
 	"sync"
 
-	"github.com/cloudwebrtc/go-protoo/logger"
-	"github.com/cloudwebrtc/go-protoo/peer"
-	"github.com/cloudwebrtc/go-protoo/transport"
+	"github.com/craterone/go-protoo/logger"
+	"github.com/craterone/go-protoo/peer"
+	"github.com/craterone/go-protoo/transport"
 )
 
 type Room struct {

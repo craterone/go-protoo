@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudwebrtc/go-protoo/logger"
+	"github.com/craterone/go-protoo/logger"
 	"github.com/gorilla/websocket"
 )
 
@@ -28,23 +28,21 @@ type TransportErr struct {
 }
 
 type TransportChans struct {
-	OnMsg chan []byte
-	OnErr chan TransportErr
+	OnMsg   chan []byte
+	OnErr   chan TransportErr
 	OnClose chan TransportErr
-	SendCh chan []byte
+	SendCh  chan []byte
 }
 
 type WebSocketTransport struct {
 	TransportChans
-	socket *websocket.Conn
-	closed bool
-	stop chan bool
+	socket   *websocket.Conn
+	closed   bool
+	stop     chan bool
 	stopLock sync.RWMutex
 	shutdown bool
-	tErr *TransportErr
+	tErr     *TransportErr
 }
-
-
 
 func NewWebSocketTransport(socket *websocket.Conn) *WebSocketTransport {
 	var transport WebSocketTransport
@@ -61,10 +59,10 @@ func NewWebSocketTransport(socket *websocket.Conn) *WebSocketTransport {
 	})
 
 	transport.TransportChans = TransportChans{
-		OnMsg: make(chan []byte, 100),
-		OnErr: make(chan TransportErr, 1),
+		OnMsg:   make(chan []byte, 100),
+		OnErr:   make(chan TransportErr, 1),
 		OnClose: make(chan TransportErr, 1),
-		SendCh: make(chan []byte, 100),
+		SendCh:  make(chan []byte, 100),
 	}
 	return &transport
 }
@@ -110,7 +108,6 @@ func (transport *WebSocketTransport) ReadLoop() {
 		}
 	}
 
-
 }
 
 func (transport *WebSocketTransport) WriteLoop() {
@@ -152,7 +149,7 @@ func (transport *WebSocketTransport) WriteLoop() {
 }
 
 func (transport *WebSocketTransport) Close() {
- transport.Stop()
+	transport.Stop()
 }
 
 // Start shutdown
@@ -168,7 +165,6 @@ func (transport *WebSocketTransport) Stop() {
 		transport.stop <- true
 	}
 }
-
 
 /*
 * Close connection.

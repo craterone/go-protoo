@@ -3,8 +3,8 @@ package peer
 import (
 	"encoding/json"
 
-	"github.com/cloudwebrtc/go-protoo/logger"
-	"github.com/cloudwebrtc/go-protoo/transport"
+	"github.com/craterone/go-protoo/logger"
+	"github.com/craterone/go-protoo/transport"
 )
 
 type PeerErr transport.TransportErr

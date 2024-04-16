@@ -1,13 +1,12 @@
 package client
 
 import (
-	"crypto/tls"
 	"net/http"
 	"time"
 
 	"github.com/chuckpreslar/emission"
-	"github.com/cloudwebrtc/go-protoo/logger"
-	"github.com/cloudwebrtc/go-protoo/transport"
+	"github.com/craterone/go-protoo/logger"
+	"github.com/craterone/go-protoo/transport"
 	"github.com/gorilla/websocket"
 )
 
@@ -23,20 +22,18 @@ type WebSocketClient struct {
 func NewClient(url string, handleWebSocket func(ws *transport.WebSocketTransport)) *WebSocketClient {
 	var client WebSocketClient
 	client.Emitter = *emission.NewEmitter()
-	logger.Infof("Connecting to %s", url)
 
 	responseHeader := http.Header{}
 	responseHeader.Add("Sec-WebSocket-Protocol", "protoo")
 
 	// only for testing
-	tls_cfg := &tls.Config{
-		InsecureSkipVerify: true,
-	}
+	// tls_cfg := &tls.Config{
+	// 	InsecureSkipVerify: true,
+	// }
 
 	dialer := websocket.Dialer{
-		Proxy:            http.ProxyFromEnvironment,
 		HandshakeTimeout: 45 * time.Second,
-		TLSClientConfig:  tls_cfg,
+		// TLSClientConfig:  tls_cfg,
 	}
 
 	socket, _, err := dialer.Dial(url, responseHeader)
