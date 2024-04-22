@@ -25,13 +25,17 @@ func DefaultConfig() WebSocketServerConfig {
 	}
 }
 
+type WebSocketHandler interface {
+	ServerWs(ws *transport.WebSocketTransport, request *http.Request)
+}
+
 type WebSocketServer struct {
-	handleWebSocket func(ws *transport.WebSocketTransport, request *http.Request)
+	handleWebSocket WebSocketHandler
 	// Websocket upgrader
 	upgrader websocket.Upgrader
 }
 
-func NewWebSocketServer(handler func(ws *transport.WebSocketTransport, request *http.Request)) *WebSocketServer {
+func NewWebSocketServer(handler WebSocketHandler) *WebSocketServer {
 	var server = &WebSocketServer{
 		handleWebSocket: handler,
 	}
@@ -53,7 +57,7 @@ func (server *WebSocketServer) handleWebSocketRequest(writer http.ResponseWriter
 	wsTransport := transport.NewWebSocketTransport(socket)
 	wsTransport.Start()
 
-	server.handleWebSocket(wsTransport, request)
+	server.handleWebSocket.ServerWs(wsTransport, request)
 }
 
 func (server *WebSocketServer) Bind(cfg WebSocketServerConfig) {
