@@ -14,7 +14,6 @@ type WebSocketServerConfig struct {
 	Port          int
 	CertFile      string
 	KeyFile       string
-	HTMLRoot      string
 	WebSocketPath string
 }
 
@@ -22,7 +21,6 @@ func DefaultConfig() WebSocketServerConfig {
 	return WebSocketServerConfig{
 		Host:          "0.0.0.0",
 		Port:          8443,
-		HTMLRoot:      ".",
 		WebSocketPath: "/ws",
 	}
 }
@@ -61,7 +59,6 @@ func (server *WebSocketServer) handleWebSocketRequest(writer http.ResponseWriter
 func (server *WebSocketServer) Bind(cfg WebSocketServerConfig) {
 	// Websocket handle func
 	http.HandleFunc(cfg.WebSocketPath, server.handleWebSocketRequest)
-	http.Handle("/", http.FileServer(http.Dir(cfg.HTMLRoot)))
 
 	if cfg.CertFile == "" || cfg.KeyFile == "" {
 		logger.Infof("non-TLS WebSocketServer listening on: %s:%d", cfg.Host, cfg.Port)
