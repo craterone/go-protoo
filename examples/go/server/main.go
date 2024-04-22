@@ -36,7 +36,10 @@ type OfferData struct {
 	Sdp string `json:"sdp"`
 }
 
-func handleNewWebSocket(transport *transport.WebSocketTransport, request *http.Request) {
+type MyWsHandler struct {
+}
+
+func (m MyWsHandler) ServerWs(transport *transport.WebSocketTransport, request *http.Request) {
 	log.Println("Handle socket")
 
 	//https://127.0.0.1:8443/ws?peer=alice
@@ -118,7 +121,7 @@ func handleNewWebSocket(transport *transport.WebSocketTransport, request *http.R
 
 func main() {
 	testRoom = room.NewRoom("room1")
-	protooServer := server.NewWebSocketServer(handleNewWebSocket)
+	protooServer := server.NewWebSocketServer(MyWsHandler{})
 	config := server.DefaultConfig()
 	config.Port = 9090
 	// config.CertFile = "../certs/cert.pem"
